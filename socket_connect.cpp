@@ -3,7 +3,7 @@
 
 socket_connect::socket_connect():sock_fd(0),in_addr(0){
      memset(&server_addr,0,sizeof(server_addr));
-     menset(&hp,0,sizeof(hp));
+     memset(hp,0,sizeof(hp));
 }
 int socket_connect::connect_server(const char* host,int server_port){
 	
