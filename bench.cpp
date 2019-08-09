@@ -146,7 +146,7 @@ map<string,int>& bench::benchcore(const char*host,const int port,const char *req
 		 continue;
 	     }
 
-	     //本代码使用http/0.9所以默认服务器返回之后才断开连接
+	     //因为主要目的是学习，所以默认使用等待服务器回复这种方式
 	     while(1){
 		 if(timeout)//如果超时则不再读取数据
 		      break;
