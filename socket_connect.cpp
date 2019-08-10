@@ -1,11 +1,11 @@
-#include"socket.h"
+#include"socket_connect.h"
 
 
 socket_connect::socket_connect():sock_fd(0),in_addr(0){
      memset(&server_addr,0,sizeof(server_addr));
      memset(hp,0,sizeof(hp));
 }
-int socket_connect::connect_server(const char* host,int server_port){
+int socket_connect::connect_server(const char* host,const int server_port){
 	
 	sock_fd=socket(AF_INET,SOCK_STREAM,0);
 	if(sockfd<0){

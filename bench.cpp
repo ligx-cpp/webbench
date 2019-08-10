@@ -1,4 +1,4 @@
-#include"bench"
+#include"bench.h"
 
 int successed_sum=0;//成功连接的次数
 int failed_sum=0;//失败请求的次数
@@ -8,7 +8,7 @@ int read_failed_sum=0;
 int close_failed_sum=0;
 int connect_failed_sum=0;//定义好全局变量
 
-bench::bench(socket_connect& sc,int clients):sc(sc),clients(clients),port(80),benchtime(30),host(NULL){
+bench::bench(int clients,int benchtime):clients(clients),benchtime(benchtime){
       memset(&sa,0,sizeof(sa));
       re_msg["bytes"]=0;//读取的总字节数
       re_msg["failed"]=0;//失败的总子进程数量
@@ -17,10 +17,13 @@ bench::bench(socket_connect& sc,int clients):sc(sc),clients(clients),port(80),be
       re_msg["send_failed"]=0;//发送失败的子进程数量
       re_msg["read_failed"]=0;//读取失败的子进程数量
       re_msg["close_failed"]=0;//关闭失败的子进程数量
+      sc=new socket_connect();
 
 }
-
-int bench::bench_ready(){
+bench::~bench(){
+	delete []sc;
+}
+int bench::bench_ready(const char*host,const int port){
       pid_t p_id=0;
       FILE* f;
       //先进行一次试探性连接
@@ -98,13 +101,13 @@ int bench::bench_ready(){
           close(f);
 
 	  //最后显示处理结果
-	  std::cout<<""<<bytes_sum<<endl;
-	  std::cout<<""<<successed_sum<<endl;
-	  std::cout<<""<<failed_sum<<endl;
-	  std::cout<<""<<connect_failed_sum<<endl;
-	  std::cout<<""<<send_failed_sum<<endl;
-	  std::cout<<""<<read_failed_sum<<endl;
-	  std::cout<<""<<close_failed_sum<<endl;
+	  std::cout<<"读取的字节总数为:"<<bytes_sum<<endl;
+	  std::cout<<"成功数目为:"<<successed_sum<<endl;
+	  std::cout<<"失败数目为:"<<failed_sum<<endl;
+	  std::cout<<"失败连接数为:"<<connect_failed_sum<<endl;
+	  std::cout<<"发送失败数目为:"<<send_failed_sum<<endl;
+	  std::cout<<"读取失败数目为:"<<read_failed_sum<<endl;
+	  std::cout<<"关闭连接失败数目为:"<<close_failed_sum<<endl;
       }
       return i;
 }

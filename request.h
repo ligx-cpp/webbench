@@ -8,7 +8,7 @@ using MAX_SIZE=2048;
 class http_req{
 public:
      http_req();
-     void build_request(string temp_url);
+     void build_request(const char* temp_url);
      char* get_url_request(){return url_request;}
      int get_port(){return port;}
      char* get_host(){return host;}

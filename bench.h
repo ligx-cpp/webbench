@@ -18,17 +18,15 @@ extern int close_failed_sum;
 
 class bench(){
 public:
-     bench(int clients);
-     int bench_ready(socket_connect sc);
+     bench(int clients,int benchtime);
+     int bench_ready(const char*host,const int port);
      map<string,int>& bench_core(const char*host,const int port,const char*req);
      inline void alarm_handler(int sig){ timeout=true; return;}
      ~bench();
 private:
      int clients;
      int mypipe[2];//用于父子进程间通信
-     int port;
      int benchtime;
-     char host[255];
      struct sigaction sa;
      map<string,int> re_msg;
      volatile bool timeout=false;

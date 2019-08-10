@@ -16,7 +16,7 @@
 class socket_connect{
 public:
      socket_connect();
-     int connect_server(const char* host,int server_port);
+     int connect_server(const char* host,const int server_port);
      ~socket_connect();
 private:
      int sock_fd;

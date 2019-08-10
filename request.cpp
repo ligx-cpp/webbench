@@ -1,7 +1,7 @@
 #include"request.h"
 
 
-http_req::http_req():port(0){
+http_req::http_req():port(80){
          url_request=new char[MAX_SIZE];
          host=new char[HOST_SIZE];
          tmp_port=new char[10];
@@ -12,8 +12,10 @@ http_req::~http_req(){
 	delete [] host;
 }
 
-void http_req::build_request(string temp_url){
-	//定义一个空字符串
+void http_req::build_request(const char* url){
+	 string temp_url(url);//直接赋值给一个string即可
+
+	 //定义一个空字符串
 	 string request="";
 	 //因为我们默认使用http/1.1,get方法所以直接copy
 	 request+="GET";
