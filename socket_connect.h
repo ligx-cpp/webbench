@@ -8,7 +8,7 @@
 #include<arpa/inet.h>
 #include<netdb.h>
 #include<sys/time.h>
-#include<cstring>
+#include<string.h>
 #include<unistd.h>
 #include<iostream>
 #include<stdlib.h>//主要是exit()函数
@@ -23,7 +23,7 @@ private:
      unsigned long in_addr;
      struct sockaddr_in server_addr;   
      struct hostent *hp;
-}
+};
 #endif
 
 

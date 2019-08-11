@@ -17,17 +17,16 @@ bench::bench(int clients,int benchtime):clients(clients),benchtime(benchtime){
       re_msg["send_failed"]=0;//发送失败的子进程数量
       re_msg["read_failed"]=0;//读取失败的子进程数量
       re_msg["close_failed"]=0;//关闭失败的子进程数量
-      sc=new socket_connect();
 
 }
 bench::~bench(){
-	delete []sc;
+	delete sc;
 }
 int bench::bench_ready(const char*host,const int port){
       pid_t p_id=0;
       FILE* f;
       //先进行一次试探性连接
-      int sock=sc.connect_server(host,port);
+      int sock=sc->connect_server(host,port);
       if(sock<0){
 	  std::cout<<"试探性连接服务器失败！"<<std::endl;
 	  return -1;
@@ -136,7 +135,7 @@ map<string,int>& bench::benchcore(const char*host,const int port,const char *req
                  return ;
 	      }
 	      //与网站建立连接
-             int sock=sc.connect_server(host,port);
+             int sock=sc->connect_server(host,port);
              if(sock<0){//连接失败
 		 ++re_msg["failed"];
 		 ++re_msg["connect_failed"];

@@ -2,8 +2,8 @@
 
 
 http_req::http_req():port(80){
-         url_request=new char[MAX_SIZE];
-         host=new char[HOST_SIZE];
+         url_request=new char[Msize];
+         host=new char[Hsize];
          tmp_port=new char[10];
 }
 http_req::~http_req(){

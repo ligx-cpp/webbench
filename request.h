@@ -2,8 +2,8 @@
 #include<string>
 #include<algorithm>
 using namespace std;
-using HOST_SIZE=1500;
-using MAX_SIZE=2048;
+#define Hsize 1500;
+#define Msize 2048;
 
 class http_req{
 public:
@@ -18,4 +18,4 @@ private:
      int port;
      char* host;
      char* tmp_port;
-}
+};

@@ -1,12 +1,13 @@
 #include<iostream>
 #include<unistd.h>
 #include<signal.h>
-#include<string.h>
+#include<string>
 #include<error.h>
 #include<time.h>
 #include<map>
 #include<stdio.h>
 #include"socket_connect.h"
+
 using namespace std;
 extern int bytes_sum;
 extern int successed_sum;
@@ -16,7 +17,8 @@ extern int read_failed_sum;
 extern int connect_failed_sun;
 extern int close_failed_sum;
 
-class bench(){
+class socket_connect;
+class bench{
 public:
      bench(int clients,int benchtime);
      int bench_ready(const char*host,const int port);
@@ -30,5 +32,5 @@ private:
      struct sigaction sa;
      map<string,int> re_msg;
      volatile bool timeout=false;
-     socket_connect sc;
-}
+     socket_connect *sc;
+};
