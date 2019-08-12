@@ -1,7 +1,9 @@
 #include<bench.h>
 
 int successed_sum=0;
+
 int failed_sum=0;
+
 int bytes_sum=0;
 int send_failed_sum=0;
 int read_failed_sum=0;
@@ -10,6 +12,7 @@ int connect_failed_sum=0;//定义好全局变量
 volatile bool timout=false;
 static void alarm_handler(int sig){ timout=true;}//报警函数设置为静态的
 bench::bench(){
+
 }
 
 bench::bench(int clients,int benchtime,char* request):clients(clients),benchtime(benchtime),request(request){
