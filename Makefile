@@ -2,15 +2,21 @@
 #Makefile for simple programs
 ###########################################
 CC=g++
-CC_FLAG=-g -Wall 
+CC_FLAG=-std=c++11 -g -Wall
+INCLUDE=-I.
+
 SRCS=main
-OBJS=main.o socket_connect.o request.o bench.o 
-$(SRCS):$(OBJS)	
-	$(CC) -o $@ $(OBJS)	
-.SUFFIXES: .o .cpp
-.cpp.o:	
-	$(CC) $(CC_FLAG) -c $*.cpp -o $*.o 
+OBJS=main.o NetAddr.o request.o bench.o 
+
+SRCS=$(wildcard *.cpp)
+OBJS=$(patsubst %.cpp,%.o,$(SRCS))
+target=main
+$(target):$(OBJS)
+	$(CC) $(INCLUDE) $^ -o $@
+%.o:%.cpp
+	$(CC) -c $^ $(CC_FLAG) $(INCLUDE) -o $@
 .PRONY:clean
 clean:	
 	@echo "Removing linked and compiled files......"	
-	rm -f $(OBJS) $(SRCS)
+	rm -f *.o
+	rm -f main

@@ -1,4 +1,4 @@
-#include"request.h"
+#include<request.h>
 
 
 http_req::http_req():port(80){
@@ -12,7 +12,7 @@ http_req::~http_req(){
 	delete [] host;
 }
 
-void http_req::build_request(const char* url){
+int http_req::build_request(const char* url){
 	 string temp_url(url);//直接赋值给一个string即可
 
 	 //定义一个空字符串
@@ -54,7 +54,7 @@ void http_req::build_request(const char* url){
 	 pos2=temp_url.find(':',7);
 	 if(pos2!=temp_url.npos && pos2<pos1 ){//将要填写的url分为含有端口号类型和不含有端口号类型的
                  string temp_host(temp_url,7,pos2-7);
-		 strcpy(host,temp.c_str());//把主机号存入host
+		 strcpy(host,temp_host.c_str());//把主机号存入host
 
 		 string temp_port(temp_url,pos2+1,pos1-pos2-1);
 		 strcpy(tmp_port,temp_port.c_str());//把端口号存入tmp_port然后转换成整形
@@ -63,7 +63,7 @@ void http_req::build_request(const char* url){
 		        port=80;
 	 }else{//如果不存在端口号
 		 string temp_host(temp_url,7,pos1-7);
-		 strcpy(host,temp.c_str());//那就只把主机号存好就可以了
+		 strcpy(host,temp_host.c_str());//那就只把主机号存好就可以了
 	 }
 	 string tmp_url(temp_url,7,temp_url.size()-7);
 	 request+=tmp_url;//将其添加到request中
@@ -91,5 +91,5 @@ void http_req::build_request(const char* url){
          
 	 //将请求拷贝到字符数组 
          strcpy(url_request,request.c_str());
-	 return ;
+	 return 0;
 }
