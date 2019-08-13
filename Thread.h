@@ -1,19 +1,24 @@
 #ifndef THREAD_H_
 #define THREAD_H_
+
 #include<thread>
 #include<mutex>
-#include<list>
+#include<request.h>
+#include<map>
+#include<bench.h>
 using std::mutex;
 using namespace std;
 
-class web_thread{
+class wthread{
 public:
      void write_in(http_req req);//因为我只需要往队列里写数据，并不需要其他的线程在写的同时去读，所以只需要一个函数
+     map<string,int> get_map(){return all;}
 private:
      map<string,int>all;//用于收集信息的线程
      mutex mu_by;//创建互斥量
      mutex mu_su;//创建互斥量
      mutex mu_fa;//创建互斥量
      mutex mu_cl;//创建互斥量
-}
+     //http_req req;
+};
 #endif

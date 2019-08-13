@@ -12,14 +12,14 @@
 #include<network.h>
 #include<request.h>
 #include<memory.h>
+#include<thread>
 
 extern volatile bool timout;
-
 class bench{
 public:
      bench();
      bench(int clients,int benchtime,char* request);
-     int bench_ready(const char*host,const int port);
+     int bench_ready(char*host,int port);
      map<string,int> bench_core(const char*host,const int port,const char* request,map<string,int>temp);
      ~bench();
 private:
@@ -30,7 +30,7 @@ private:
      vector<thread>my_threads;
      NetAddr *sc;
      http_req req;
-     web_thread myweb;
+     
 };
 
 

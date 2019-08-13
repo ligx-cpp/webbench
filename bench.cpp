@@ -1,4 +1,5 @@
 #include<bench.h>
+#include<Thread.h>
 volatile bool timout=false;
 
 static void alarm_handler(int sig){ 
@@ -10,13 +11,11 @@ bench::bench(){
 }
 bench::bench(int clients,int benchtime,char* request):clients(clients),benchtime(benchtime),request(request){
       memset(&sa,0,sizeof(sa));
-      re_msg["bytes"]=0;//读取的总字节数
-      re_msg["failed"]=0;//失败的总子进程数量
-      re_msg["successed"]=0;//成功的总子进程数量
 }
 bench::~bench(){
 }
-int bench::bench_ready(const char*host,const int port){
+int bench::bench_ready(char*host,int port){
+      wthread myweb;
       //先进行一次试探性连接
       int sock=sc->conserver(host,port);
       if(sock<0){
@@ -28,17 +27,19 @@ int bench::bench_ready(const char*host,const int port){
       req.port=port;
       req.url_request=request;
 
-      for(int =0;i<clients;++i){
-          mythreads.push_back(thread(&web_thread::write_in,&myweb,req));//第二个参数表示所有线程都是对同一对象操作,第二个参数必须是引用才能保证所有线程用的是同一对象
+      for(int i=0;i<clients;++i){
+          my_threads.push_back(thread(&wthread::write_in,&myweb,req));//第二个参数表示所有线程都是对同一对象操作,第二个参数必须是引用才能保证所有线程用的是同一对象
       }
+      map<string,int>re_msg;
 
-      for(auto iter=mythreads.begin();iter!=mythreads.end();++iter){
+      for(auto iter=my_threads.begin();iter!=my_threads.end();++iter){
           iter->join();//等待线程执行完毕
       }
       cout<<"所有线程执行完毕"<<endl;
       //最后显示处理结果
 
-      std::cout<<"读取的字节总数为:"<<remsg["bytes"]<<endl;
+      re_msg=myweb.get_map();
+      std::cout<<"读取的字节总数为:"<<re_msg["bytes"]<<endl;
       std::cout<<"成功数目为:"<<re_msg["successed"]<<endl;
       std::cout<<"失败数目为:"<<re_msg["failed"]<<endl;
       return 0;

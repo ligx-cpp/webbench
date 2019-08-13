@@ -1,17 +1,10 @@
 #include<Thread.h>
 
-void web_thread::write_in(http_req req){
+void wthread::write_in(http_req req){
       map<string,int>temp;
       temp["bytes"]=0;
       temp["failed"]=0;
       temp["successed"]=0;
-
-      bytes=temp["bytes"];
-      failed=temp["failed"];
-      successed=temp["successed"];
-
-      lock_guard<mutex> m4(mu_cl);//上锁
-      msg_queue.push_back(i);
 
       char* host=req.get_host();
       int port=req.get_port();
