@@ -3,23 +3,24 @@
 #include<iostream>
 #include<cstring>
 #include<algorithm>
+#include<string>
 using namespace std;
-#define Hsize 1500
-#define Msize 2048
 
 class http_req{
 public:
      http_req();
-     int build_request(const char* temp_url);
+     int build_request(string url);
      int get_port(){return port;}
-     char* get_host(){return host;}
-     char* get_request(){return url_request;}
+     string get_url_request(){return url_request;}
+     string get_host(){return host;}
+     void cin_host(string host_t){host=host_t;}
+     void cin_port(int port_t){port=port_t;}
+     void cin_url_request(string request_t){url_request=request_t;}
      ~http_req();
 private:
-     char* tmp_port;
-public:
-     char* url_request;//存放http请求报文信息
-     int port;
-     char* host;
+     char tmp_port[10];
+     int port;//这是端口号
+     string url_request;
+     string host;//这是主机号如www.baidu.com或者172.168.0.1
 };
 #endif

@@ -9,26 +9,29 @@ static void alarm_handler(int sig){
 bench::bench(){
 
 }
-bench::bench(int clients,int benchtime,char* request):clients(clients),benchtime(benchtime),request(request){
-      memset(&sa,0,sizeof(sa));
+bench::bench(int clients,int benchtime,string request):clients(clients),benchtime(benchtime),request(request){
+      //sc=new NetAddr();
+      sa.sa_flags=0;
+      sa.sa_handler=alarm_handler;
 }
 bench::~bench(){
+      //delete sc;
 }
-int bench::bench_ready(char*host,int port){
-      wthread myweb;
+int bench::bench_ready(string host,int port){
+      
       //先进行一次试探性连接
-      int sock=sc->conserver(host,port);
+      int sock=sc.conserver(host,port);
       if(sock<0){
 	  std::cout<<"试探性连接服务器失败！"<<std::endl;
 	  return -1;
       }
       close(sock);//若试探性连接成功，则先关闭连接
-      req.host=host;
-      req.port=port;
-      req.url_request=request;
+      req.cin_host(host);
+      req.cin_port(port);
+      req.cin_url_request(request);
 
       for(int i=0;i<clients;++i){
-          my_threads.push_back(thread(&wthread::write_in,&myweb,req));//第二个参数表示所有线程都是对同一对象操作,第二个参数必须是引用才能保证所有线程用的是同一对象
+                     my_threads.push_back(thread(&wthread::write_in,&myweb,req));//第二个参数表示所有线程都是对同一对象操作,第二个参数必须是引用才能保证所有线程用的是同一对象
       }
       map<string,int>re_msg;
 
@@ -44,9 +47,11 @@ int bench::bench_ready(char*host,int port){
       std::cout<<"失败数目为:"<<re_msg["failed"]<<endl;
       return 0;
 }
-map<string,int> bench::bench_core(const char*host,const int port,const char *request,map<string,int>temp){
+map<string,int> bench::bench_core(string host,const int port,string request,map<string,int>temp){
           char buf[1500];
-	  int rlen=strlen(request);//请求报文的长度
+	  const char* host_t=host.c_str();
+	  const char* request_t=request.c_str();
+	  int rlen=strlen(request_t);//请求报文的长度
 	  sa.sa_handler=alarm_handler;//设置自定义的闹钟函数alarm_handler
 	  sa.sa_flags=0;
 
@@ -63,13 +68,13 @@ map<string,int> bench::bench_core(const char*host,const int port,const char *req
 		 exit(0);
 	      }
 	      //与网站建立连接
-             int sock=sc->conserver(host,port);
+             int sock=sc.conserver(host_t,port);
              if(sock<0){//连接失败
 		 ++temp["failed"];
 		 continue;
 	     }
 
-	     if(rlen!=write(sock,request,rlen)){//验证写事件是否会失败 
+	     if(rlen!=write(sock,request_t,rlen)){//验证写事件是否会失败 
 		 ++temp["failed"];
 		 continue;
 	     }

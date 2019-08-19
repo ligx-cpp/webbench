@@ -1,27 +1,27 @@
-#pragma once
+#ifndef NETWORK_H_
+#define NETWORK_H_
 
-#include <unistd.h>
-#include <sys/types.h>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
-#include <sys/fcntl.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <net/if.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <errno.h>
 #include <netinet/in.h>
-#include <ifaddrs.h>
-
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <memory.h>
+using namespace std;
 
 class NetAddr
 {
 public:
      NetAddr();
-     int conserver(const char* host,const int server_port);
+     int conserver(string host,int server_port);
      ~NetAddr();
-private:
-     int sock_fd;
-     unsigned long i_addr;
-     struct sockaddr_in server_addr;   
-     struct hostent *hp;
-        
+public:
+     int sock_fd;   
 };
-
+#endif

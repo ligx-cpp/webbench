@@ -6,10 +6,10 @@ void wthread::write_in(http_req req){
       temp["failed"]=0;
       temp["successed"]=0;
 
-      char* host=req.get_host();
+      string host=req.get_host();
       int port=req.get_port();
-      char* request=req.get_request();
-
+      string request=req.get_url_request();
+      
       bench bch;
       temp=bch.bench_core(host,port,request,temp);
 

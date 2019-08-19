@@ -18,19 +18,20 @@ extern volatile bool timout;
 class bench{
 public:
      bench();
-     bench(int clients,int benchtime,char* request);
-     int bench_ready(char*host,int port);
-     map<string,int> bench_core(const char*host,const int port,const char* request,map<string,int>temp);
+     bench(int clients,int benchtime,string request);
+     int bench_ready(string host,int port);
+     map<string,int> bench_core(string host,const int port,string request,map<string,int>temp);
      ~bench();
 private:
      int clients;
      int benchtime;
-     char* request;
+     string request;
+     string host;
      struct sigaction sa;
      vector<thread>my_threads;
-     NetAddr *sc;
+     NetAddr sc;
      http_req req;
-     
+     wthread myweb;
 };
 
 
