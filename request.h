@@ -9,6 +9,7 @@ using namespace std;
 class http_req{
 public:
      http_req();
+     //为了将类对象作为参数传入线程中 必须有拷贝构造函数和要重载运算符(),我觉得应该是使用的默认的拷贝构造函数和()的运算符重载
      int build_request(string url);
      int get_port(){return port;}
      string get_url_request(){return url_request;}

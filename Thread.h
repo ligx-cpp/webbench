@@ -5,13 +5,13 @@
 #include<mutex>
 #include<request.h>
 #include<map>
-#include<bench.h>
+#include<iostream>
 using std::mutex;
 using namespace std;
 
 class wthread{
 public:
-     void write_in(http_req req);//因为我只需要往队列里写数据，并不需要其他的线程在写的同时去读，所以只需要一个函数
+     void write_in(http_req req,int benchtime);//因为我只需要往队列里写数据，并不需要其他的线程在写的同时去读，所以只需要一个函数
      map<string,int> get_map(){return all;}
 private:
      map<string,int>all;//用于收集信息的线程

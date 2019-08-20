@@ -9,29 +9,34 @@
 #include<map>
 #include<vector>
 #include<stdio.h>
+#include<stdlib.h>
 #include<network.h>
 #include<request.h>
 #include<memory.h>
+#include<Thread.h>
 #include<thread>
+#include <chrono>
+#include <ratio>
+#include <ctime>
 
-extern volatile bool timout;
+using namespace std::chrono;
 class bench{
 public:
      bench();
-     bench(int clients,int benchtime,string request);
+     bench(int benchtime);
+     bench(int clients,int btime,string request);
      int bench_ready(string host,int port);
      map<string,int> bench_core(string host,const int port,string request,map<string,int>temp);
      ~bench();
 private:
      int clients;
-     int benchtime;
      string request;
-     string host;
-     struct sigaction sa;
+     int benchtime;
      vector<thread>my_threads;
      NetAddr sc;
-     http_req req;
+     map<string,int>re_msg;
      wthread myweb;
+     http_req req; 
 };
 
 
