@@ -13,6 +13,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <memory.h>
+#include <fcntl.h>
 using namespace std;
 
 class NetAddr

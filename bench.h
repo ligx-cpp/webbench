@@ -26,7 +26,7 @@ public:
      bench(int benchtime);
      bench(int clients,int btime,string request);
      int bench_ready(string host,int port);
-     map<string,int> bench_core(string host,const int port,string request,map<string,int>temp);
+     map<string,long double> bench_core(string host,const int port,string request,map<string,long double>temp);
      ~bench();
 private:
      int clients;
@@ -34,7 +34,6 @@ private:
      int benchtime;
      vector<thread>my_threads;
      NetAddr sc;
-     map<string,int>re_msg;
      wthread myweb;
      http_req req; 
 };
